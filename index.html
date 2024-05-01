@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sim-Grasp: Learning 6-DOF Grasp Policies for Cluttered Environments Using a Synthetic Benchmark</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          color: black;
+          line-height: 1.8;
+          background-color: #f5f5f5;
+          font-size: 1.7em;
+      }
+
+      header {
+          background-color: #f5f5f5;
+          padding: 40px 0;
+          margin-bottom: 20px;
+      }
+
+      header h1 {
+          color: black;
+          font-weight: bold;
+          text-align: center;
+          word-wrap: break-word;
+          max-width: 100%;
+          margin-bottom: 50px;
+          font-size: 2.8em;
+      }
+
+      header h3 {
+          color: black;
+          text-align: center;
+          font-size:1.4em;
+          margin: 10px 10;
+      }
+
+      .publication-links a {
+            display: inline-block;
+            padding: 10px 10px;
+            border-radius: 50px;
+            background-color: #333;
+            color: #ecf0f1;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .publication-links .icon i {
+            margin-right: 10px;
+        }
+
+      footer {
+          background-color: #2a2a2a;
+          padding: 25px 0;
+          font-size: 14px;
+          color: #b5b5b5;
+          text-align: center;
+          margin-top: 30px;
+      }
+
+      .shadow-box {
+          background-color: white;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+          padding: 40px;
+          margin: 0px 0;
+          border-radius: 8px;
+      }
+
+      .video-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .video {
+          width: 100%;
+          position: relative;
+          padding-bottom: 56.25%;
+          height: 0;
+          overflow: hidden;
+          margin-bottom: 30px;
+      }
+
+      .video video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+      }
+
+      .figures-tables figure {
+          display: block;
+          overflow: auto;
+          height: auto;
+          width: 80%;
+          margin: 20px auto;
+      }
+
+      .figures-tables img {
+          display: block;
+          max-width: 100%;
+          height: auto;
+          margin: auto;
+      }
+
+      .figure1 img {
+          width: 50%;
+          height: auto;
+      }
+
+      .acknowledgement-logos {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 20px;
+      }
+
+      .acknowledgement-logos img {
+          width: 20%;
+          height: 170px;
+          margin: 10px;
+          transition: transform 0.3s;
+      }
+
+      .acknowledgement-logos img:hover {
+          transform: scale(1.05);
+      }
+
+      h2 {
+          font-weight: 500;
+          color: #2c3e50;
+          margin-top: 20px;
+      }
+
+      p,
+        figcaption,
+        .citation-section {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+      .citation-section {
+          margin-top: 20px;
+          margin-bottom: 20px;
+      }
+
+      .citation-section a {
+          color: #2980b9;
+      }
+
+      .citation-section a:hover {
+          text-decoration: underline;
+      }
+      .custom-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+      .custom-figure {
+          margin: 0 30px; /* Adjust the margin as needed */
+          margin-top: 60px;
+          margin-bottom: 0px;
+
+      }
+
+      .custom-img {
+          width: 400px; /* Adjust the width as needed */
+          height: auto; /* maintains aspect ratio */
+      }
+
+      @media only screen and (max-width: 768px) {
+          .figures-tables img, .video {
+              width: 100%;
+          }
+
+          .acknowledgement-logos img {
+              width: 40%;
+          }
+      }
+  </style>
+</head>
+  <body>
+     <!-- Bootstrap JS and Popper.js -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+     <!-- AOS (Animate On Scroll) -->
+     <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+     <script>
+          AOS.init();
+     </script>
+     <header>
+      
+        <h1>Sim-Grasp: Learning 6-DOF Grasp Policies for Cluttered Environments
+            Using a Synthetic Benchmark</h1>
+      
+        <h3>Juncheng Li<sup>1</sup>, David J. Cappelleri<sup>1,2</sup></h3>
+        <h3><sup>1</sup>Multi-Scale Robotics & Automation Lab, School of Mechanical Engineering, Purdue University, West Lafayette, IN USA</h3>
+        <h3><sup>2</sup>The Weldon School of Biomedical
+            Engineering (By Courtesy), Purdue University, West Lafayette, IN USA </h3>
+        <div class="publication-links" style="text-align: center;">
+            <!-- arXiv Link -->
+            <a href="https://arxiv.org/abs/2305.16378" class="external-link">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>arXiv</span>
+            </a>
+            <!-- GitHub Code Link -->
+            <a href="https://github.com/junchengli1/Sim-Grasp/" class="external-link">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+            </a>
+            <!-- Add more links as needed -->
+        </div>
+        <div class="custom-container">
+          <figure class="custom-figure">
+              <img src="img/sim-grasp-logo.png" alt="Figure 1" class="custom-img">
+          </figure>
+          
+      </div>
+    </header>
+    <div class="container">
+      <div class="shadow-box">
+        
+        <h2>Abstract</h2>
+        <p>
+            In this paper, we present Sim-Grasp, a robust
+            6-DOF two-finger grasping system that integrates advanced
+            language models for enhanced object manipulation in cluttered
+            environments. We introduce the Sim-Grasp-Dataset, which
+            includes 1,550 objects across 500 scenarios with 7.9 million
+            annotated labels, and develop Sim-GraspNet to generate grasp
+            poses from point clouds. The Sim-Grasp-Polices achieve grasping 
+            success rates of <strong>97.14%</strong> for single objects and <strong>87.43%</strong> and
+            <strong>83.33%</strong> for mixed clutter scenarios of Levels 1-2 and Levels
+            3-4 objects, respectively. By incorporating language models for
+            target identification through text and box prompts, Sim-Grasp
+            enables both object-agnostic and target picking, pushing the
+            boundaries of intelligent robotic systems.
+          
+        </p>
+        
+        <h2>Figures and Tables</h2>
+        <div class="figures-tables">
+            <figure class="figure1">
+            <img src="img/intro.png" alt="Figure 1" height="500">
+            <figcaption>
+                Overview of Sim-Grasp system. Sim-Grasp is a deep-learning based
+                system to determine the robust 6-DOF two-finger grasp poses in cluttered
+                environments.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="img/dataset.png" alt="Figure 2">
+            <figcaption>
+                Example of a 6D Grasping Label Dataset. To better visualize the dataset, only a subset of the candidate grasps is displayed after passing collision
+                checks. Green markers indicate successful grasps with a grasp score of 1, while red markers represent unsuccessful grasps with a grasp score of 0.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="img/symbol_6dof.png" alt="Figure 3" width="300">
+            <figcaption>
+                    The Sim-Suction 6D suction grasp pose policy. The green marker represents the 6D grasp pose for the object instance with the highest confidence score. The transparency of the blue markers indicates the confidence score, with higher transparency implying lower confidence and vice versa.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="img/pipeline.png" alt="Figure 4">
+            <figcaption>
+                Sim-Grasp Architecture. The Sim-GraspNet network provides
+                the backbone for the Sim-Grasp multi-modal grasping policies. The green
+                marker represents the 6D grasp pose for the object instance with the
+                highest confidence score. The transparency of the blue markers indicates
+                the confidence score, with higher transparency implying lower confidence
+                and vice versa            
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="img/setup_together.png" alt="Figure 5">
+            <figcaption>
+                The experiment setup with Fetch robot equipped with RGB-D
+                camera. The robot picks up objects from the workspace and drops them in
+                the collection bin. We choose 64 household items, with 13 objects in Level
+                1, 19 objects in Level 2, 21 objects in Level 3, and 11 objects in Level 4.                
+                    
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="img/results.png" alt="Figure 6">
+            <figcaption>
+                Example results of the Sim-Grasp-Policies in various scenarios: (a)
+                Grasping a complex 3D printed part. (b) Grasping an object from a partially
+                occluded point cloud. (c) Grasping in a cluttered environment. (d) Targeted
+                picking using a text prompt to pick up a green dinosaur. (e) Targeted picking
+                using a box prompt to pick up the item within the selected region.               
+                    
+            </figcaption>
+          </figure>
+        
+          <figure>
+            <img src="img/compare.png" alt="Figure 7" width="500">
+            <figcaption>
+                <strong>Top Row:</strong> Performance comparison of the three policies on a
+                red bowl, highlighting challenges in grasping objects with curved surfaces.
+                <strong>Middle Row:</strong>  Performance comparison of the three policies on a joystick,
+                illustrating difficulties in handling objects with irregular shapes. <strong>Bottom
+                Row:</strong>  Performance comparison of the three policies in a cluttered scenario.
+                             
+                    
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="img/fail.png" alt="Figure 7" width="500">
+            <figcaption>
+            Sim-Grasp-Polices failure cases. (a) Multi-grasp and collision
+            scenario leading to an unsecured grasp. (b) Difficulty in grasping ball-shaped
+            objects resulting in empty grasps. (c) Unstable grasp pose on an object
+            with complex geometry causing the object to flip. These cases illustrate
+            the challenges faced in cluttered environments and with objects of varied
+            geometries.
+
+                             
+                    
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img src="img/table_results.png" alt="Figure 7">
+            
+          </figure>
+
+        </div>
+        
+        <h2>Experimental Videos</h2>
+        <div class="video-container">
+        <div class="video">
+            <video controls>
+            <source src="videos/sim_grasp_dataset_clip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video">
+            <video controls>
+            <source src="videos/single_clip_web.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="video">
+            <video controls>
+            <source src="videos/c1_c2_clip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video">
+            <video controls>
+            <source src="videos/c3_c4_clip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video">
+            <video controls>
+            <source src="videos/box_clip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="video">
+            <video controls>
+            <source src="videos/text_clip.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+        
+    </div>
+        
+        <h2>Citation and arXiv Link</h2>
+        <div class="citation-section">
+        <a href="https://arxiv.org/abs/2305.16378" target="_blank">Arxiv:2305.16378</a>
+        <span>BibTeX:</span>
+        <pre>
+        @misc{li2024simgrasp,
+            title={Sim-Grasp: Learning 6-DOF Grasp Policies for Cluttered Environments Using a Synthetic Benchmark},
+            author={Juncheng Li and David J. Cappelleri},
+            year={2024},
+            eprint={2305.16378},
+            archivePrefix={arXiv},
+            primaryClass={cs.RO}
+        }
+        </pre>
+        </div>
+                  
+                  <h2>Acknowledgements</h2>
+                  <p> The authors would like to acknowledge the use of the
+                    facilities at the Indiana Next Generation Manufacturing Competitiveness Center (IN-MaC) for this paper. A portion of
+                    this work was supported by a Space Technology Research
+                    Institutes grant (# 80NSSC19K1076) from NASA’s Space
+                    Technology Research Grants Program. </p>
+                  <div class="acknowledgement-logos">
+                    <img src="img/nasa.png" alt="Lab logo 1">
+                    <img src="img/rethi.png" alt="Lab logo 2">
+                    <img src="img/inmac.png" alt="Funding logo 1">
+                  </div>
+                </div>
+              </div>
+              <footer>
+                &copy; 2024 Sim-Grasp | Juncheng Li, David Cappelleri | Purdue University
+              </footer>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+            </body>
+            </html>
