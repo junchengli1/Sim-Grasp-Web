@@ -1,3 +1,1 @@
-# Sim-Suction: Learning a Suction Grasp Policy for
-Cluttered Environments Using a Synthetic
-Benchmark
+#Sim-Grasp: Learning 6-DOF Grasp Policies for Cluttered Environments Using a Synthetic Benchmark
